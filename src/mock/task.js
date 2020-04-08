@@ -49,8 +49,10 @@ const generateTask = () => {
     color: getRandomArrayItem(COLORS),
     isArchive: Math.random() > 0.5,
     isFavorite: Math.random() > 0.5,
+  };
 };
-};const generateTasks = (count) => {
+
+const generateTasks = (count) => {
   return new Array(count)
     .fill(``)
     .map(generateTask);
