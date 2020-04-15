@@ -115,9 +115,9 @@ const createTaskEditTemplate = (task) => {
               <h3 class="card__colors-title">Color</h3>
               <div class="card__colors-wrap">
                 ${colorsMarkup}
+                </div>
               </div>
             </div>
-          </div>
   
           <div class="card__status-btns">
             <button class="card__save" type="submit">save</button>
@@ -140,7 +140,7 @@ export default class TaskEdit {
   }
 
   getElement() {
-    if (this._element) {
+    if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
     return this._element;
