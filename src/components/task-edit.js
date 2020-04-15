@@ -1,5 +1,5 @@
 import {DAYS, MONTH_NAMES, COLORS} from "../const.js";
-import {formatTime} from "../utils.js";
+import {formatTime, createElement} from "../utils.js";
 
 const createColorsMarkup = (colors, currentColor) => {
   return colors
@@ -44,7 +44,7 @@ const createRepeatingDaysMarkup = (days, repeatingDays) => {
     .join(`\n`);
 };
 
-export const createTaskEditTemplate = (task) => {
+const createTaskEditTemplate = (task) => {
   const {description, dueDate, color, repeatingDays} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
@@ -59,7 +59,7 @@ export const createTaskEditTemplate = (task) => {
   const repeatingDaysMarkup = createRepeatingDaysMarkup(DAYS, repeatingDays);
 
   return (
-    `<article class="card card--edit card--${color} ${repeatClass} ${deadlineClass}>
+    `<article class="card card--edit card--${color} ${repeatClass} ${deadlineClass}">
       <form class="card__form" method="get">
         <div class="card__inner">
           <div class="card__color-bar">
@@ -103,11 +103,11 @@ export const createTaskEditTemplate = (task) => {
                   repeat:<span class="card__repeat-status">yes</span>
                 </button>
   
-                <fieldset class="card__repeat-days">
+                ${isRepeatingTask ? `<fieldset class="card__repeat-days">
                   <div class="card__repeat-days-inner">
                     ${repeatingDaysMarkup}
                   </div>
-                </fieldset>
+                </fieldset>` : ``}
               </div>
             </div>
 
@@ -115,9 +115,9 @@ export const createTaskEditTemplate = (task) => {
               <h3 class="card__colors-title">Color</h3>
               <div class="card__colors-wrap">
                 ${colorsMarkup}
+                </div>
               </div>
             </div>
-          </div>
   
           <div class="card__status-btns">
             <button class="card__save" type="submit">save</button>
@@ -128,3 +128,25 @@ export const createTaskEditTemplate = (task) => {
     </article>`
   );
 };
+
+export default class TaskEdit {
+  constructor(task) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskEditTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
