@@ -59,7 +59,7 @@ const createTaskEditTemplate = (task) => {
   const repeatingDaysMarkup = createRepeatingDaysMarkup(DAYS, repeatingDays);
 
   return (
-    `<article class="card card--edit card--${color} ${repeatClass} ${deadlineClass}>
+    `<article class="card card--edit card--${color} ${repeatClass} ${deadlineClass}">
       <form class="card__form" method="get">
         <div class="card__inner">
           <div class="card__color-bar">
