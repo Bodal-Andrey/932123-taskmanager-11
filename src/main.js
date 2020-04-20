@@ -36,7 +36,7 @@ const renderTask = (taskListElement, task) => {
   const editButton = taskComponent.getElement().querySelector(`.card__btn--edit`);
   editButton.addEventListener(`click`, () => {
     replaceTaskToEdit();
-    document.removeEventListener(`keydown`, onEscKeyDown);
+    document.addEventListener(`keydown`, onEscKeyDown);
   });
 
   const taskEditComponent = new TaskEditComponent(task);
