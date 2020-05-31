@@ -14,11 +14,17 @@ export default class Provider {
   getTasks() {
     if (isOnline()) {
       return this._api.getTasks()
-      .then((tasks) => {
-        tasks.forEach((task) => this._store.setItem(task.id, task.toRAW()));
+        .then((tasks) => {
+          const items = tasks.reduce((acc, current) => {
+            return Object.assign({}, acc, {
+              [current.id]: current,
+            });
+          }, {});
 
-        return tasks;
-      });
+          this._store.setItems(items);
+
+          return tasks;
+        });
     }
 
     const storeTasks = Object.values(this._store.getItems());
